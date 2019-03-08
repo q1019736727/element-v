@@ -1,20 +1,18 @@
 <template>
-  <div class="loginWrapper">
-    <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="密码" prop="pass">
-      </el-form-item>
-      <el-input type="password" v-model="ruleForm2.pass" autocomplete="off"></el-input>
-      <el-form-item label="确认密码" prop="checkPass">
-      </el-form-item>
-      <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
-      <el-form-item label="年龄" prop="age">
-      </el-form-item>
-      <el-input v-model.number="ruleForm2.age"></el-input>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-        <el-button @click="resetForm('ruleForm2')">重置</el-button>
-      </el-form-item>
-    </el-form>
+  <div id="Login">
+    <div class="loginWrapper">
+      <el-form @submit.native.prevent="login">
+        <div class="userInfo">
+          <span>用户名</span>
+          <el-input class="input" v-model="username" type="text" name="username"></el-input>
+          <span>密码</span>
+          <el-input class="input" v-model="password" type="password" name="password"></el-input>
+        </div>
+        <div class="submitWrapper">
+          <el-input class="submit" type="submit" value="登录"></el-input>
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -22,81 +20,58 @@
   export default {
     name: "Login",
     data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm2.checkPass !== '') {
-            this.$refs.ruleForm2.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm2.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
       return {
-        ruleForm2: {
-          pass: '',
-          checkPass: '',
-          age: ''
-        },
-        rules2: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
-          ]
-        }
-      };
+        username: '',
+        password: '',
+      }
     },
     methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+      login(){
+        this.$router.push({name: 'Home'})
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
     }
   }
 </script>
 
-<style lang="scss">
-  .loginWrapper{
-    width: 335px;
-    height: 260px;
+<style lang="scss" scoped>
+  #Login {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eff3f6;
+    .loginWrapper {
+      width: 335px;
+      height: 260px;
+      box-shadow: 0 0 5px #ccc;
+      background: #fefefe;
+      .userInfo{
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        padding-left: 30px;
+        height: 185px;
+        .input{
+          width: 260px;
+        }
+        >span{
+          font-size: 14px;
+          color: #666;
+          display: inline-block;
+          vertical-align: top;
+          line-height: 43px;
+        }
+      }
+      .submitWrapper{
+        height: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #eff4f6;
+        .submit{
+        width: 100px;
+        }
+      }
+    }
   }
 </style>
