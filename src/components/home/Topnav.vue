@@ -13,7 +13,7 @@
     name: "Topnav",
     data(){
       return{
-        managerName:'超级管理员',
+        managerName: this.$store.state.userInfo.username,
       }
     },
     methods:{

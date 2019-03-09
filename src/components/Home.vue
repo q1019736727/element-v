@@ -75,7 +75,8 @@
     }
     .homeWrapper{
       width: 210px;
-      height: 100vh;
+      height: calc(100vh - 60px);
+      overflow: scroll;
       background: #f5f5f5;
     }
   }

@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import '@/common/common.scss'//引入初始样式
 import router from './router'
+import store from './store'
 import ElementUI from 'element-ui';
 
 //默认引入样式
@@ -19,6 +20,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
