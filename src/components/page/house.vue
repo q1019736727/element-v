@@ -31,6 +31,9 @@
         ]
       }
     },
+    mounted(){
+
+    },
     components:{
       Page
     }

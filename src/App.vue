@@ -5,21 +5,20 @@
 </template>
 
 <script>
-export default {
-  name: 'App',
-  data() {
-    return {
-
-    };
-  },
-  methods: {
-
+  import Vue from 'vue'
+  export default {
+    name: 'App',
+    data() {
+      return {
+        bus: new Vue()
+      };
+    },
+    methods: {}
   }
-}
 </script>
 
 <style>
-#app {
+  #app {
 
-}
+  }
 </style>
