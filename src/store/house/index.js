@@ -23,5 +23,9 @@ const index = {
 
   //异步操作
   actions,
+
+  getters:{
+
+  }
 }
 export default index
