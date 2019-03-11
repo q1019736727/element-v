@@ -13,7 +13,7 @@
     name: "Topnav",
     data(){
       return{
-        managerName: this.$store.state.userInfo.username,
+        managerName: this.$store.state.binding.userInfo.username,
       }
     },
     methods:{

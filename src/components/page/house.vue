@@ -2,11 +2,15 @@
   <div id="house">
     <table>
       <tr>
-        <th v-for="head in tableDta">{{head.title}}</th>
+        <th v-for="title in titles">{{title}}</th>
       </tr>
       <tr v-for="data in tableDta">
-        <td v-for="item in data.data">
+        <td v-for="(item,index) in data.data">
           {{item}}
+        </td>
+        <td>
+          <button @click="addList">增加</button>
+          <button @click="deleteRow">删除</button>
         </td>
       </tr>
     </table>
@@ -16,55 +20,93 @@
 
 <script>
   import Page from '../home/Pageination'
+
   export default {
     name: "house",
-    data(){
-      return{
-        tableDta:[
-          {title:'公司',data:['成都合达联行合达物业服务有限公司','花语岸项目','9-1-5-502','李享','15886432554','待处理','2019-03-08 10:33:23']},
-          {title:'项目',data:['贵阳和沐物业股份有限公司','置信•国际社区','9-1-5-502','李享','15886432554','待处理','2019-03-08 10:33:23']},
-          {title:'房号',data:['成都合达联行物业服务有限公司巴中分公司','645项目','15-2-2-4','李可可','15886432554','待处理','2019-03-08 10:33:23']},
-          {title:'联系人',data:['成都合达联行物业服务有限公司巴中分公司','逸景苑','15-2-2-4','李享','15886432554','待处理','2019-03-08 10:33:23']},
-          {title:'电话',data:['成都合智商务服务有限公司彭州分公司','置信•国际社区','11-2-2-202','李可可','15886432554','待处理','2019-03-08 10:33:23']},
-          {title:'状态',data:['成都合达联行合达物业服务有限公司','麓湖宫','16-1-4-2','李享','15886432554','待处理','2019-03-08 10:33:23']},
-          {title:'报修时间',data:['成都合智商务服务有限公司彭州分公司','逸景苑','16-1-4-2','李可可','15886432554','待处理','2019-03-08 10:33:23']},
-        ]
+    data() {
+      return {
+        titles: ['公司', '项目', '房号', '联系人', '电话', '状态', '报修时间', '操作'],
+        tableDta: this.$store.state.house.tableDta
       }
     },
-    mounted(){
+    mounted() {
 
     },
-    components:{
+    methods: {
+      addList(){
+        this.$store.dispatch('addListAction',{data:['新加数据哈哈😄','😄😄','16-1-4-2','李可可','15886432554','待处理','2019-03-08 10:33:23']})
+      },
+      deleteRow(index) {
+        this.$confirm(`是否删除该条记录${index}`, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          center: true
+        }).then(() => {
+          this.$store.dispatch('reduceListAction', 1).then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            });
+          })
+        })
+      }
+    },
+    components: {
       Page
     }
   }
 </script>
 
 <style lang="scss" scoped>
+  @import "@/common/main.scss";
+
   #house {
     padding-left: 10px;
     padding-top: 10px;
-    table{
+    table {
       min-width: 900px;
-      border-collapse:collapse;//合并空隙
-      tr{
+      border-collapse: collapse; //合并空隙
+      tr {
         font-size: 14px;
         color: #999999;
-        &:nth-child(even){
+        &:nth-child(even) {
           background: #eee;
         }
-        >th{
+        > th {
           border: 1px solid #ccc;
           color: black;
           line-height: 60px;
         }
-        >td{
+        > td {
           border: 1px solid #ccc;
           text-align: center;
           line-height: 25px;
           padding: 10px 15px;
-          &:nth-child(1){
+          &:nth-child(1) {
             max-width: 150px;
+          }
+          &:last-child {
+            min-width: 100px;
+          }
+          > button {
+            padding: 5px 10px;
+            color: $main_color;
+            background: white;
+            border: 1px solid #ccc;
+            &:last-child {
+              color: red;
+            }
+            &:hover{
+              cursor: pointer;
+            }
+            &:focus {
+              outline: none;
+            }
           }
         }
       }

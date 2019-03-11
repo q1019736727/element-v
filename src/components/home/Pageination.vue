@@ -40,22 +40,12 @@
       //下一页
       nextAction() {
         let pageArr = this.pageNums
-        // if (pageArr[5] >= 6){
-        //   this.currentIndex = 5
-        // }
         this.pageNums.splice(10, 0, (pageArr[9] + 1))
         this.pageNums.splice(0, 1)
       },
       //上一页
       preAction() {
         let pageArr = this.pageNums
-        // if (pageArr[5] >= 6){
-        //   this.currentIndex = 5
-        // }
-        // else{
-        //   if (this.currentIndex === 0) return
-        //   this.currentIndex -= 1
-        // }
         if (pageArr[0] === 1) return
         this.pageNums.splice(0, 0, (pageArr[0] - 1))
         this.pageNums.splice(10, 1)
@@ -72,18 +62,34 @@
 
 <style lang="scss" scoped>
   #pageination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 40px;
     @mixin hoverP {
       cursor: pointer;
     }
     span {
       @include hoverP;
+      width: 45px;
+      height: 36px;
+      line-height: 36px;
+      border: 1px solid #cccccc;
+      text-align: center;
+      &:nth-child(2),&:last-child,&:nth-last-child(2){
+        border-left: none;
+      }
+
     }
     button {
       @include hoverP;
-      padding: 10px 0;
+      height: 38px;
       width: 45px;
+      border: 1px solid #cccccc;
+      border-left: none;
       &.activity {
-        background: gray;
+        background: #cccccc;
       }
       &:focus {
         outline: none;
